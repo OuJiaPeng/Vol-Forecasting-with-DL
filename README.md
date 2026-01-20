@@ -4,13 +4,11 @@ This project explores deep learning for volatility forecasting. The main goal is
 
 Currently, a PatchTST model is being used to perform volatility forecasting for BTC-USD daily prices. The project includes a full pipeline for data processing, training, evaluation, and comparison against classical benchmarks like GARCH and Kalman filters.
 
-Working on the multivariate model; The univariate model already performs well.
-
 ---
 
 ## Results
 
-The univariate PatchTST model, using an ensemble of 30 runs, demonstrates superior performance against both full-window and rolling GARCH and Kalman filter benchmarks. The metrics below are for the full test horizon.
+The univariate PatchTST model, using an ensemble of 30 runs, demonstrates better performance against both full-window and rolling GARCH and Kalman filter benchmarks. The metrics below are for the full test horizon.
 
 For reference, the average realized volatility over the test set was 0.0243
 
@@ -37,6 +35,36 @@ For reference, the average realized volatility over the test set was 0.0243
 - **Comprehensive Evaluation:** MSE, MAE, QLIKE, and Directional Accuracy metrics.
 - **Automated Pipeline:** Scripts for running multiple experiments, generating targets, and plotting results.
 - **Visualizations:** Plots comparing model predictions against realized volatility.
+
+---
+
+## Data
+
+- **Source:** Daily BTC-USD returns data (2014–present).
+- **Preprocessing:**
+  - Daily log returns are computed from adjusted close prices.
+  - The target variable is the 5-day future rolling standard deviation of log returns (realized volatility).
+  - Benchmarks (GARCH, Kalman, EWMA) are also generated and stored.
+- **Partitioning:**
+  - **Train:** 2014-01-01 to 2022-12-31
+  - **Validation:** 2023-01-01 to 2023-12-31
+  - **Test:** 2024-01-01 to present
+- **Windowing:**
+  - **Input window (seq_len):** 100 days
+  - **Forecast horizon:** 5 days
+- **Files:**
+  - Raw data: `data/btc_2014_now.csv`
+  - Target generation: `compare/targets/targets.py`
+  - Processed targets & benchmarks: `compare/targets/with_all_targets.csv`
+
+---
+
+## Future Work
+
+- Develop custom deep learning models from scratch.
+- Explore other transformer architectures (e.g., TFT, Informer, Autoformer).
+- Expand to multivariate forecasting, incorporating additional features.
+- Test on more financial time series datasets.
 
 ---
 
@@ -71,34 +99,4 @@ Volatility Forecasting with Deep Learning/
 ├── README.md
 └── requirements.txt
 ```
----
-
-## Data
-
-- **Source:** Daily BTC-USD price data (2014–present), from EODHD API.
-- **Preprocessing:**
-  - Daily log returns are computed from adjusted close prices.
-  - The target variable is the 5-day future rolling standard deviation of log returns (realized volatility).
-  - Benchmarks (GARCH, Kalman, EWMA) are also generated and stored.
-- **Partitioning:**
-  - **Train:** 2014-01-01 to 2022-12-31
-  - **Validation:** 2023-01-01 to 2023-12-31
-  - **Test:** 2024-01-01 to present
-- **Windowing:**
-  - **Input window (seq_len):** 100 days
-  - **Forecast horizon:** 5 days
-- **Files:**
-  - Raw data: `data/btc_2014_now.csv`
-  - Target generation: `compare/targets/targets.py`
-  - Processed targets & benchmarks: `compare/targets/with_all_targets.csv`
-
----
-
-## Future Work
-
-- Develop custom deep learning models from scratch.
-- Explore other transformer architectures (e.g., TFT, Informer, Autoformer).
-- Expand to multivariate forecasting, incorporating additional features.
-- Test on more financial time series datasets.
-
 ---
