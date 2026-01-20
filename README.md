@@ -62,9 +62,9 @@ For reference, the average realized volatility over the test set was 0.0243
 ## Future Work
 
 - Develop custom deep learning models from scratch.
-- Explore other transformer architectures (e.g., TFT, Informer, Autoformer).
-- Expand to multivariate forecasting, incorporating additional features.
-- Test on more financial time series datasets.
+- Explore other transformer architectures (e.g. TFT, Informer, Autoformer).
+- Expand to multivariate inputs, incorporating more types of data.
+- Test on different financial time series datasets.
 
 ---
 
